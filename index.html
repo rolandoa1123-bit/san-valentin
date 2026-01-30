@@ -1,9 +1,10 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>💘 San Valentín</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>💖 14 de febrero</title>
+
   <style>
     body{
       margin:0;
@@ -11,59 +12,92 @@
       display:flex;
       align-items:center;
       justify-content:center;
-      background: radial-gradient(circle at top, #ff8fb1, #ff3d6e);
+      background: radial-gradient(circle at top, #ff9abf, #ff3d6e);
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
       overflow:hidden;
     }
+
     .card{
       background: rgba(255,255,255,0.95);
       border-radius: 22px;
-      padding: 28px 24px;
-      text-align:center;
-      width: min(520px, 92vw);
+      padding: 22px 20px;
+      width: min(560px, 92vw);
       box-shadow: 0 20px 60px rgba(0,0,0,0.25);
       position:relative;
+      text-align:center;
     }
+
     h1{
-      margin:0 0 12px;
+      margin:12px 0 10px;
       font-size:28px;
       color:#2b2b2b;
     }
-    .name{ color:#ff2f6d; }
+
+    .name{
+      color:#ff2f6d;
+    }
+
     p{
-      margin:0 0 18px;
+      margin:0 0 16px;
       font-size:16px;
       color:#444;
     }
-    .buttons{
+
+    .photo{
+      width:min(420px, 90%);
+      aspect-ratio: 16/10;
+      object-fit: cover;
+      border-radius: 18px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+      border: 4px solid rgba(255,255,255,0.9);
+    }
+
+    .buttons, .options{
       display:flex;
-      gap:14px;
+      gap:12px;
       justify-content:center;
       flex-wrap:wrap;
+      margin-top:14px;
     }
+
     button{
       border:none;
-      padding:12px 20px;
+      padding:12px 18px;
       border-radius:14px;
       font-size:16px;
-      font-weight:700;
+      font-weight:800;
       cursor:pointer;
     }
+
     .yes{
       background:#ff2f6d;
       color:white;
     }
+
     .no{
       background:#f2f2f2;
       color:#333;
     }
-    .result{
-      display:none;
-      margin-top:18px;
-      font-size:18px;
-      font-weight:800;
-      color:#1f7a3a;
+
+    .opt{
+      background:#ffffff;
+      color:#2b2b2b;
+      border:2px solid #ff2f6d;
     }
+
+    .back{
+      background:#f2f2f2;
+      color:#333;
+    }
+
+    .screen{
+      display:none;
+    }
+
+    .screen.active{
+      display:block;
+    }
+
     .hearts{
       position:absolute;
       inset:-40px;
@@ -71,6 +105,7 @@
       overflow:hidden;
       border-radius:22px;
     }
+
     .heart{
       position:absolute;
       bottom:-20px;
@@ -81,6 +116,7 @@
       opacity:0.7;
       animation: floatUp linear infinite;
     }
+
     .heart::before,
     .heart::after{
       content:"";
@@ -90,65 +126,100 @@
       border-radius:50%;
       background:#ff2f6d;
     }
+
     .heart::before{ left:-9px; top:0; }
     .heart::after{ top:-9px; left:0; }
+
     @keyframes floatUp{
       from{ transform: translateY(0) rotate(45deg); }
       to{ transform: translateY(-120vh) rotate(45deg); }
     }
   </style>
 </head>
+
 <body>
 
-  <div class="card">
-    <div class="hearts" id="hearts"></div>
+<div class="card">
+  <div class="hearts" id="hearts"></div>
 
-    <h1>💖 <span class="name">Samy</span>, ¿quieres ser mi <br>14 de febrero?</h1>
-    <p>Prometo que será un día lindo, risas, algo rico y muchos recuerdos 💘</p>
+  <!-- PANTALLA 1 -->
+  <div class="screen active" id="screen1">
+    <img class="photo" src="foto.jpg" alt="Foto">
+
+    <h1>💖 <span class="name">Samy</span>,<br>¿quieres ser mi <span class="name">14 de febrero</span>?</h1>
+
+    <p>Prometo un día bonito, risas, algo rico y muchos recuerdos 💘</p>
 
     <div class="buttons">
       <button class="yes" id="yesBtn">Sí 🥰</button>
       <button class="no" id="noBtn">No 🙈</button>
     </div>
-
-    <div class="result" id="result">¡SÍÍÍ! 💞✨</div>
   </div>
 
-  <script>
-    const hearts = document.getElementById('hearts');
+  <!-- PANTALLA 2 -->
+  <div class="screen" id="screen2">
+    <h1>AAAAA 😍💘</h1>
+    <p>Entonces elige nuestro plan:</p>
 
-    function createHeart(){
-      const h = document.createElement('div');
-      h.className = 'heart';
-      h.style.left = Math.random()*100 + '%';
-      const size = 12 + Math.random()*18;
-      h.style.width = size + 'px';
-      h.style.height = size + 'px';
-      h.style.animationDuration = (3 + Math.random()*4) + 's';
-      hearts.appendChild(h);
-      setTimeout(()=>h.remove(), 7000);
-    }
+    <div class="options">
+      <button class="opt" onclick="pick('🍝 Cena + postre')">🍝 Cena + postre</button>
+      <button class="opt" onclick="pick('🎬 Película + snacks')">🎬 Película + snacks</button>
+      <button class="opt" onclick="pick('🌇 Plan chill + fotos')">🌇 Plan chill + fotos</button>
+    </div>
 
-    setInterval(createHeart, 200);
+    <p id="choice" style="margin-top:14px;font-weight:800;color:#ff2f6d;display:none;"></p>
 
-    const yesBtn = document.getElementById('yesBtn');
-    const noBtn = document.getElementById('noBtn');
-    const result = document.getElementById('result');
+    <div class="options">
+      <button class="back" onclick="back()">⬅️ Volver</button>
+    </div>
+  </div>
+</div>
 
-    yesBtn.addEventListener('click', ()=>{
-      result.style.display = 'block';
-    });
+<script>
+  // Corazones
+  const hearts = document.getElementById("hearts");
+  function createHeart(){
+    const h = document.createElement("div");
+    h.className = "heart";
+    h.style.left = Math.random()*100 + "%";
+    const size = 12 + Math.random()*18;
+    h.style.width = size + "px";
+    h.style.height = size + "px";
+    h.style.animationDuration = (3 + Math.random()*4) + "s";
+    hearts.appendChild(h);
+    setTimeout(()=>h.remove(), 8000);
+  }
+  setInterval(createHeart, 200);
 
-    noBtn.addEventListener('mouseenter', ()=>{
-      const x = (Math.random()*200) - 100;
-      const y = (Math.random()*150) - 75;
-      noBtn.style.transform = `translate(${x}px, ${y}px)`;
-    });
+  // Pantallas
+  const screen1 = document.getElementById("screen1");
+  const screen2 = document.getElementById("screen2");
+  const yesBtn = document.getElementById("yesBtn");
+  const noBtn = document.getElementById("noBtn");
 
-    noBtn.addEventListener('click', ()=>{
-      alert('No te dejo decir que no 🙈');
-    });
-  </script>
+  yesBtn.onclick = () => {
+    screen1.classList.remove("active");
+    screen2.classList.add("active");
+  };
+
+  noBtn.onmouseenter = () => {
+    const x = (Math.random()*200) - 100;
+    const y = (Math.random()*150) - 75;
+    noBtn.style.transform = `translate(${x}px, ${y}px)`;
+  };
+
+  function pick(text){
+    const c = document.getElementById("choice");
+    c.innerText = "Elegiste: " + text + " 💞";
+    c.style.display = "block";
+  }
+
+  function back(){
+    screen2.classList.remove("active");
+    screen1.classList.add("active");
+  }
+</script>
 
 </body>
 </html>
+
