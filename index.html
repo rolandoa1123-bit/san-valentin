@@ -21,7 +21,7 @@
       background: rgba(255,255,255,0.95);
       border-radius:22px;
       padding:22px 20px;
-      width:min(560px, 92vw);
+      width:min(600px, 92vw);
       box-shadow:0 20px 60px rgba(0,0,0,0.25);
       position:relative;
       text-align:center;
@@ -31,28 +31,30 @@
       margin:12px 0 10px;
       font-size:28px;
       color:#2b2b2b;
+      line-height:1.15;
     }
 
     .name{ color:#ff2f6d; }
 
+    p{
+      margin:0 0 14px;
+      font-size:16px;
+      color:#444;
+    }
+
     .photo, .video{
-      width:min(420px, 90%);
+      width:min(460px, 95%);
       aspect-ratio:16/10;
       border-radius:18px;
       box-shadow:0 10px 30px rgba(0,0,0,0.18);
       border:4px solid rgba(255,255,255,0.9);
       object-fit:cover;
-    }
-
-    p{
-      margin:0 0 16px;
-      font-size:16px;
-      color:#444;
+      background:#000;
     }
 
     .buttons, .options{
       display:flex;
-      gap:14px;
+      gap:12px;
       justify-content:center;
       flex-wrap:wrap;
       margin-top:16px;
@@ -60,15 +62,16 @@
 
     button{
       border:none;
-      padding:14px 20px;
+      padding:14px 18px;
       border-radius:16px;
       font-size:16px;
-      font-weight:800;
+      font-weight:900;
       cursor:pointer;
+      user-select:none;
     }
 
     .yes{ background:#ff2f6d; color:white; }
-    .no{ background:#f2f2f2; color:#333; }
+
     .opt{
       background:white;
       border:2px solid #ff2f6d;
@@ -78,6 +81,7 @@
     .screen{ display:none; }
     .screen.active{ display:block; }
 
+    /* Corazones flotando */
     .hearts{
       position:absolute;
       inset:-40px;
@@ -114,6 +118,15 @@
       from{ transform: translateY(0) rotate(45deg); }
       to{ transform: translateY(-120vh) rotate(45deg); }
     }
+
+    /* Corazones fijos grandes para la pantalla final */
+    .big-hearts{
+      display:flex;
+      justify-content:center;
+      gap:10px;
+      font-size:34px;
+      margin-top:10px;
+    }
   </style>
 </head>
 
@@ -124,52 +137,46 @@
 
   <!-- PANTALLA 1 -->
   <div class="screen active" id="screen1">
-    <img class="photo" src="foto.jpg" alt="Foto principal">
+    <img class="photo" src="foto.jpg.jpeg" alt="Foto principal">
 
     <h1>💖 <span class="name">Samy</span>,<br>
       ¿quieres ser mi <span class="name">14 de febrero</span>?
     </h1>
 
     <div class="buttons">
-      <button class="yes" id="yesBtn">Sí 🥰</button>
-      <button class="no" id="noBtn">No 🙈</button>
+      <button class="yes" id="goBtn">Sí 🥰</button>
     </div>
   </div>
 
   <!-- PANTALLA 2 -->
   <div class="screen" id="screen2">
-    <h1>😏💘</h1>
-    <p>Dime tú entonces…</p>
+    <h1>😏 <span class="name">¿De veritas, de veritas?</span></h1>
+
+    <video class="video" src="foto.2.mp4" controls playsinline></video>
 
     <div class="options">
-      <button class="opt" onclick="showVideo()">
-        😏 ¿De veritas, de veritas?
-      </button>
-
-      <button class="opt" onclick="finalChoice()">
-        🔥 Okey Samy, 14 de febrero es el point
-      </button>
+      <button class="opt" onclick="goFinal()">✅ Sí, pero claro</button>
+      <button class="opt" onclick="goFinal()">💗 Por supuesto</button>
+      <button class="opt" onclick="goFinal()">😅 No</button>
     </div>
+  </div>
 
-    <!-- VIDEO EXTRA -->
-    <video id="extraVideo"
-           class="video"
-           src="foto.2.mp4"
-           controls
-           playsinline
-           style="display:none; margin-top:18px;">
-    </video>
+  <!-- PANTALLA 3 FINAL -->
+  <div class="screen" id="screen3">
+    <h1>💘 Okey <span class="name">Samy Samantha</span>,<br>
+      nos vemos el <span class="name">14 de febrero</span>
+    </h1>
 
-    <p id="finalMsg"
-       style="display:none; margin-top:18px; font-size:18px;
-              font-weight:900; color:#ff2f6d;">
-      Entonces ya quedó decidido 💞
+    <div class="big-hearts">💖 💞 💘 💝 💗</div>
+    <p style="margin-top:10px; font-weight:900; color:#ff2f6d;">
+      (ya quedó sellado 😌)
     </p>
   </div>
+
 </div>
 
 <script>
-  // Corazones
+  // Corazones flotando (fondo)
   const hearts = document.getElementById("hearts");
   function createHeart(){
     const h = document.createElement("div");
@@ -184,35 +191,25 @@
   }
   setInterval(createHeart, 200);
 
-  const screen1 = document.getElementById("screen1");
-  const screen2 = document.getElementById("screen2");
-  const yesBtn = document.getElementById("yesBtn");
-  const noBtn = document.getElementById("noBtn");
+  // Navegación de pantallas
+  const s1 = document.getElementById("screen1");
+  const s2 = document.getElementById("screen2");
+  const s3 = document.getElementById("screen3");
 
-  yesBtn.onclick = () => {
-    screen1.classList.remove("active");
-    screen2.classList.add("active");
+  document.getElementById("goBtn").onclick = () => {
+    s1.classList.remove("active");
+    s2.classList.add("active");
   };
 
-  noBtn.onmouseenter = () => {
-    const x = (Math.random()*200) - 100;
-    const y = (Math.random()*150) - 75;
-    noBtn.style.transform = `translate(${x}px, ${y}px)`;
-  };
-
-  function showVideo(){
-    document.getElementById("extraVideo").style.display = "block";
-    document.getElementById("finalMsg").style.display = "none";
-  }
-
-  function finalChoice(){
-    document.getElementById("extraVideo").style.display = "none";
-    document.getElementById("finalMsg").style.display = "block";
+  function goFinal(){
+    s2.classList.remove("active");
+    s3.classList.add("active");
   }
 </script>
 
 </body>
 </html>
+
 
 
 
