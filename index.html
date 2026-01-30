@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>💘 San Valentín</title>
+  <style>
+    body{
+      margin:0;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background: radial-gradient(circle at top, #ff8fb1, #ff3d6e);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      overflow:hidden;
+    }
+    .card{
+      background: rgba(255,255,255,0.95);
+      border-radius: 22px;
+      padding: 28px 24px;
+      text-align:center;
+      width: min(520px, 92vw);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+      position:relative;
+    }
+    h1{
+      margin:0 0 12px;
+      font-size:28px;
+      color:#2b2b2b;
+    }
+    .name{ color:#ff2f6d; }
+    p{
+      margin:0 0 18px;
+      font-size:16px;
+      color:#444;
+    }
+    .buttons{
+      display:flex;
+      gap:14px;
+      justify-content:center;
+      flex-wrap:wrap;
+    }
+    button{
+      border:none;
+      padding:12px 20px;
+      border-radius:14px;
+      font-size:16px;
+      font-weight:700;
+      cursor:pointer;
+    }
+    .yes{
+      background:#ff2f6d;
+      color:white;
+    }
+    .no{
+      background:#f2f2f2;
+      color:#333;
+    }
+    .result{
+      display:none;
+      margin-top:18px;
+      font-size:18px;
+      font-weight:800;
+      color:#1f7a3a;
+    }
+    .hearts{
+      position:absolute;
+      inset:-40px;
+      pointer-events:none;
+      overflow:hidden;
+      border-radius:22px;
+    }
+    .heart{
+      position:absolute;
+      bottom:-20px;
+      width:18px;
+      height:18px;
+      background:#ff2f6d;
+      transform:rotate(45deg);
+      opacity:0.7;
+      animation: floatUp linear infinite;
+    }
+    .heart::before,
+    .heart::after{
+      content:"";
+      position:absolute;
+      width:18px;
+      height:18px;
+      border-radius:50%;
+      background:#ff2f6d;
+    }
+    .heart::before{ left:-9px; top:0; }
+    .heart::after{ top:-9px; left:0; }
+    @keyframes floatUp{
+      from{ transform: translateY(0) rotate(45deg); }
+      to{ transform: translateY(-120vh) rotate(45deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <div class="hearts" id="hearts"></div>
+
+    <h1>💖 <span class="name">Samy</span>, ¿quieres ser mi <br>14 de febrero?</h1>
+    <p>Prometo que será un día lindo, risas, algo rico y muchos recuerdos 💘</p>
+
+    <div class="buttons">
+      <button class="yes" id="yesBtn">Sí 🥰</button>
+      <button class="no" id="noBtn">No 🙈</button>
+    </div>
+
+    <div class="result" id="result">¡SÍÍÍ! 💞✨</div>
+  </div>
+
+  <script>
+    const hearts = document.getElementById('hearts');
+
+    function createHeart(){
+      const h = document.createElement('div');
+      h.className = 'heart';
+      h.style.left = Math.random()*100 + '%';
+      const size = 12 + Math.random()*18;
+      h.style.width = size + 'px';
+      h.style.height = size + 'px';
+      h.style.animationDuration = (3 + Math.random()*4) + 's';
+      hearts.appendChild(h);
+      setTimeout(()=>h.remove(), 7000);
+    }
+
+    setInterval(createHeart, 200);
+
+    const yesBtn = document.getElementById('yesBtn');
+    const noBtn = document.getElementById('noBtn');
+    const result = document.getElementById('result');
+
+    yesBtn.addEventListener('click', ()=>{
+      result.style.display = 'block';
+    });
+
+    noBtn.addEventListener('mouseenter', ()=>{
+      const x = (Math.random()*200) - 100;
+      const y = (Math.random()*150) - 75;
+      noBtn.style.transform = `translate(${x}px, ${y}px)`;
+    });
+
+    noBtn.addEventListener('click', ()=>{
+      alert('No te dejo decir que no 🙈');
+    });
+  </script>
+
+</body>
+</html>
