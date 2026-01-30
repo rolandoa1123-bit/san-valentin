@@ -144,9 +144,11 @@
 
   <!-- PANTALLA 1 -->
   <div class="screen active" id="screen1">
-    <img class="photo" src="foto.jpg.jpeg" alt="Foto">
+    <img class="photo" src="foto.jpg" alt="Foto principal">
 
-    <h1>💖 <span class="name">Samy</span>,<br>¿quieres ser mi <span class="name">14 de febrero</span>?</h1>
+    <h1>💖 <span class="name">Samy</span>,<br>
+      ¿quieres ser mi <span class="name">14 de febrero</span>?
+    </h1>
 
     <p>Prometo un día bonito, risas, algo rico y muchos recuerdos 💘</p>
 
@@ -159,15 +161,32 @@
   <!-- PANTALLA 2 -->
   <div class="screen" id="screen2">
     <h1>AAAAA 😍💘</h1>
-    <p>Entonces elige nuestro plan:</p>
+    <p>Entonces… dime:</p>
 
     <div class="options">
-      <button class="opt" onclick="pick('🍝 Cena + postre')">🍝 Cena + postre</button>
-      <button class="opt" onclick="pick('🎬 Película + snacks')">🎬 Película + snacks</button>
-      <button class="opt" onclick="pick('🌇 Plan chill + fotos')">🌇 Plan chill + fotos</button>
+      <button class="opt" onclick="pick('🍝 Cena + postre')">
+        🍝 Cena + postre
+      </button>
+
+      <button class="opt" onclick="showPhoto()">
+        😏 ¿De veritas, de veritas?
+      </button>
+
+      <button class="opt" onclick="pick('🔥 Okey Samy, 14 de febrero es el point')">
+        🔥 Okey Samy, 14 de febrero es el point
+      </button>
     </div>
 
-    <p id="choice" style="margin-top:14px;font-weight:800;color:#ff2f6d;display:none;"></p>
+    <!-- FOTO EXTRA -->
+    <img id="extraPhoto"
+         src="foto.2.mp4"
+         style="display:none; margin-top:16px; width:85%; border-radius:18px;
+                box-shadow:0 10px 30px rgba(0,0,0,0.25);"
+         alt="Foto especial">
+
+    <p id="choice"
+       style="margin-top:14px;font-weight:800;color:#ff2f6d;display:none;">
+    </p>
 
     <div class="options">
       <button class="back" onclick="back()">⬅️ Volver</button>
@@ -210,8 +229,17 @@
 
   function pick(text){
     const c = document.getElementById("choice");
+    const img = document.getElementById("extraPhoto");
+    img.style.display = "none";
     c.innerText = "Elegiste: " + text + " 💞";
     c.style.display = "block";
+  }
+
+  function showPhoto(){
+    const img = document.getElementById("extraPhoto");
+    const c = document.getElementById("choice");
+    img.style.display = "block";
+    c.style.display = "none";
   }
 
   function back(){
@@ -222,4 +250,5 @@
 
 </body>
 </html>
+
 
